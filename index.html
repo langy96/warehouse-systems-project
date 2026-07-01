@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Stk/Trk</title>
+        <title>Stk/Trk WMS</title>
         <meta name="Author" content="Jamie Lang">
 
         <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
@@ -20,15 +20,84 @@
         <main>
             <section>
                 <h2>Dashboard</h2>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Total Products: 3</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Low Stock Items: 1</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Out of Stock: 1</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section>
                 <h2>Products</h2>
+    
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Stock</th>
+                            <th>Reorder Level</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr>
+                            <td>GL-01-SM</td>
+                            <td>Safety Gloves</td>
+                            <td>PPE</td>
+                            <td>A1-F</td>
+                            <td>13</td>
+                            <td>7</td>
+                            <td><span class="badge text-bg-success">In Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>GL-01-LG</td>
+                            <td>Safety Gloves</td>
+                            <td>PPE</td>
+                            <td>A2-A</td>
+                            <td>0</td>
+                            <td>11</td>
+                            <td><span class="badge text-bg-danger">Out of Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>JMP-03-MD</td>
+                            <td>Hi-Vis Jumper</td>
+                            <td>General</td>
+                            <td>D5-C</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td><span class="badge text-bg-warning">Low Stock</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
         </main>
 
         <footer>
-            <p>Copyright Stk/Trk 2026</p>
+            <p>&copy; 2026 Stk/Trk Software Ltd. All Rights Reserved.</p>
         </footer>
 
         <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
