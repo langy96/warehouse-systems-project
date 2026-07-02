@@ -49,6 +49,23 @@
             </section>
 
             <section>
+                <h2>Receive Stock</h2>
+                <form id="receiveStockForm">
+                    <select id="receiveSku" class="form-select" required></select>
+
+                    <input
+                        type="number"
+                        id="receivedQuantity"
+                        class="form-control"
+                        min="1"
+                        placeholder="Quantity Received"
+                        required>
+
+                    <button type="submit" class="btn btn-primary">Receive Stock</button>
+                </form>
+            </section>
+
+            <section>
                 <h2>Products</h2>
     
                 <table class="table table-hover">
