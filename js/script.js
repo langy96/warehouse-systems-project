@@ -1,3 +1,27 @@
+function getOrderStatus(order) {
+    if (order.status === "Despatched") {
+        return {
+            label: "Despatched",
+            badgeClass: "text-bg-success"
+        };
+    } else if (order.priority === "Next Day") {
+        return {
+            label: order.status,
+            badgeClass: "text-bg-warning"
+        };
+    } else if (order.status === "Ready to Despatch") {
+        return {
+            label: order.status,
+            badgeClass: "text-bg-primary"
+        };
+    } else {
+        return {
+            label: order.status,
+            badgeClass: "text-bg-secondary"
+        };
+    }
+}
+
 function getProductStatus(product) {
     if (product.stock === 0) {
         return {
@@ -108,15 +132,15 @@ function renderOrdersTable(ordersToRender) {
     tableBody.innerHTML = "";
 
     ordersToRender.forEach(order => {
+        const status = getOrderStatus(order);
         const row = document.createElement("tr");
-
         const items = order.lines.map(line => `${line.sku} x ${line.quantity}`).join(", ");
         row.innerHTML = `
             <td>${order.orderNumber}</td>
             <td>${order.customer}</td>
             <td>${order.deliveryArea}</td>
             <td>${order.priority}</td>
-            <td>${order.status}</td>
+            <td><span class="badge ${status.badgeClass}">${status.label}</span></td>
             <td>${items}</td>
         `;
         tableBody.appendChild(row);
