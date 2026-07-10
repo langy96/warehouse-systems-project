@@ -169,13 +169,13 @@ function renderProductsTable(productsToRender) {
 
 function getFilteredProducts() {
     const selectedStatus = document.getElementById("productStatusFilter").value;
-
-    if (selectedStatus === "All") {
-        return products;
-    }
+    const selectedLocation = document.getElementById("productLocationFilter").value;
 
     return products.filter(product => {
-        return getProductStatus(product).label === selectedStatus;
+        const matchesStatus = selectedStatus === "All" || getProductStatus(product).label === selectedStatus;
+        const matchesLocation = selectedLocation === "All" || product.location === selectedLocation;
+
+        return matchesStatus && matchesLocation;
     });
 }
 
@@ -256,6 +256,12 @@ document.getElementById("despatchOrderForm").addEventListener("submit", function
 });
 
 document.getElementById("productStatusFilter").addEventListener("change", function(event) {
+    event.preventDefault();
+
+    renderApp();
+});
+
+document.getElementById("productLocationFilter").addEventListener("change", function(event) {
     event.preventDefault();
 
     renderApp();
