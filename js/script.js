@@ -39,6 +39,18 @@ function renderProductOptions(productsToRender) {
     });
 }
 
+function renderOrderOptions(ordersToRender) {
+    const orderSelect = document.getElementById("orderNumber");
+    orderSelect.innerHTML = '<option value="" disabled selected hidden>Select Order</option>';
+
+    ordersToRender.forEach(order => {
+        const option = document.createElement("option");
+        option.value = order.orderNumber;
+        option.textContent = `${order.orderNumber} - ${order.status}`;
+        orderSelect.appendChild(option);
+    });
+}
+
 const products = [
     {
         sku: "GL-01-SM",
@@ -59,10 +71,35 @@ const products = [
     {
         sku: "JMP-03-MD",
         productName: "Hi-Vis Jumper",
-        category: "General",
+        category: "Hi-Vis",
         location: "D5-C",
         stock: 1,
         reorderLevel: 1
+    }
+];
+
+const orders = [
+    {
+        orderNumber: 220993,
+        customer: "Lucy Lang Ltd",
+        deliveryArea: "West Yorkshire",
+        priority: "Next Day",
+        status: "Awaiting Pick",
+        lines: [
+            { sku: "GL-01-SM", quantity: 10 },
+            { sku: "GL-01-LG", quantity: 5 },
+            { sku: "JMP-03-MD", quantity: 2 }
+        ]
+    },
+    {
+        orderNumber: 130624,
+        customer: "Freya's Flowers",
+        deliveryArea: "West Yorkshire",
+        priority: "48 Hours",
+        status: "Ready to Despatch",
+        lines: [
+            { sku: "GL-01-SM", quantity: 1 }
+        ]
     }
 ];
 
@@ -90,6 +127,7 @@ function renderApp() {
     renderProductsTable(products);
     renderDashboard(products);
     renderProductOptions(products);
+    renderOrderOptions(orders);
 };
 
 renderApp();
@@ -113,6 +151,49 @@ document.getElementById("receiveStockForm").addEventListener("submit", function(
     product.stock += quantity;
 
     document.getElementById("receiveStockForm").reset();
+
+    renderApp();
+});
+
+document.getElementById("despatchOrderForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const orderNumber = document.getElementById("orderNumber").value;
+
+    if (!orderNumber) {
+        return;
+    }
+
+    const order = orders.find(order => String(order.orderNumber) === orderNumber);
+
+    if (!order) {
+        return;
+    }
+
+    if (order.status === "Despatched") {
+        alert("Order already despatched.");
+        return;
+    }
+
+    const hasEnoughStock = order.lines.every(line => {
+        const product = products.find(product => product.sku === line.sku);
+
+        return product && product.stock >= line.quantity;
+    });
+
+    if (!hasEnoughStock) {
+        alert("Insufficient stock to despatch order.");
+        return;
+    }
+
+    order.lines.forEach(line => {
+        const product = products.find(product => product.sku === line.sku);
+        product.stock -= line.quantity;
+    });
+
+    order.status = "Despatched";
+
+    document.getElementById("despatchOrderForm").reset();
 
     renderApp();
 });
