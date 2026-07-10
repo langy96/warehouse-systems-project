@@ -103,6 +103,26 @@ const orders = [
     }
 ];
 
+function renderOrdersTable(ordersToRender) {
+    const tableBody = document.getElementById("ordersTableBody");
+    tableBody.innerHTML = "";
+
+    ordersToRender.forEach(order => {
+        const row = document.createElement("tr");
+
+        const items = order.lines.map(line => `${line.sku} x ${line.quantity}`).join(", ");
+        row.innerHTML = `
+            <td>${order.orderNumber}</td>
+            <td>${order.customer}</td>
+            <td>${order.deliveryArea}</td>
+            <td>${order.priority}</td>
+            <td>${order.status}</td>
+            <td>${items}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
 function renderProductsTable(productsToRender) {
     const tableBody = document.getElementById("productsTableBody");
     tableBody.innerHTML = "";
@@ -126,6 +146,7 @@ function renderProductsTable(productsToRender) {
 function renderApp() {
     renderProductsTable(products);
     renderDashboard(products);
+    renderOrdersTable(orders);
     renderProductOptions(products);
     renderOrderOptions(orders);
 };
