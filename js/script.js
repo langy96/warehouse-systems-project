@@ -167,8 +167,20 @@ function renderProductsTable(productsToRender) {
     });
 }
 
+function getFilteredProducts() {
+    const selectedStatus = document.getElementById("productStatusFilter").value;
+
+    if (selectedStatus === "All") {
+        return products;
+    }
+
+    return products.filter(product => {
+        return getProductStatus(product).label === selectedStatus;
+    });
+}
+
 function renderApp() {
-    renderProductsTable(products);
+    renderProductsTable(getFilteredProducts());
     renderDashboard(products);
     renderOrdersTable(orders);
     renderProductOptions(products);
@@ -239,6 +251,12 @@ document.getElementById("despatchOrderForm").addEventListener("submit", function
     order.status = "Despatched";
 
     document.getElementById("despatchOrderForm").reset();
+
+    renderApp();
+});
+
+document.getElementById("productStatusFilter").addEventListener("change", function(event) {
+    event.preventDefault();
 
     renderApp();
 });
