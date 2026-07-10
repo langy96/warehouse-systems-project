@@ -102,11 +102,23 @@ const products = [
     }
 ];
 
+const customers = [
+    {
+        customerId: 1,
+        name: "Lucy Lang Ltd",
+        deliveryArea: "County Durham"
+    },
+    {
+        customerId: 2,
+        name: "Freya's Flowers",
+        deliveryArea: "West Yorkshire"
+    }
+];
+
 const orders = [
     {
         orderNumber: 220993,
-        customer: "Lucy Lang Ltd",
-        deliveryArea: "West Yorkshire",
+        customerId: 1,
         priority: "Next Day",
         status: "Awaiting Pick",
         lines: [
@@ -117,8 +129,7 @@ const orders = [
     },
     {
         orderNumber: 130624,
-        customer: "Freya's Flowers",
-        deliveryArea: "West Yorkshire",
+        customerId: 2,
         priority: "48 Hours",
         status: "Ready to Despatch",
         lines: [
@@ -132,13 +143,14 @@ function renderOrdersTable(ordersToRender) {
     tableBody.innerHTML = "";
 
     ordersToRender.forEach(order => {
+        const customer = customers.find(customer => customer.customerId === order.customerId);
         const status = getOrderStatus(order);
         const row = document.createElement("tr");
         const items = order.lines.map(line => `${line.sku} x ${line.quantity}`).join(", ");
         row.innerHTML = `
             <td>${order.orderNumber}</td>
-            <td>${order.customer}</td>
-            <td>${order.deliveryArea}</td>
+            <td>${customer ? customer.name : "Unknown Customer"}</td>
+            <td>${customer ? customer.deliveryArea : "Unknown Area"}</td>
             <td>${order.priority}</td>
             <td><span class="badge ${status.badgeClass}">${status.label}</span></td>
             <td>${items}</td>
