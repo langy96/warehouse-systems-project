@@ -170,12 +170,14 @@ function renderProductsTable(productsToRender) {
 function getFilteredProducts() {
     const selectedStatus = document.getElementById("productStatusFilter").value;
     const selectedLocation = document.getElementById("productLocationFilter").value;
+    const selectedCategory = document.getElementById("productCategoryFilter").value;
 
     return products.filter(product => {
         const matchesStatus = selectedStatus === "All" || getProductStatus(product).label === selectedStatus;
         const matchesLocation = selectedLocation === "All" || product.location === selectedLocation;
+        const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
 
-        return matchesStatus && matchesLocation;
+        return matchesStatus && matchesLocation && matchesCategory;
     });
 }
 
@@ -262,6 +264,12 @@ document.getElementById("productStatusFilter").addEventListener("change", functi
 });
 
 document.getElementById("productLocationFilter").addEventListener("change", function(event) {
+    event.preventDefault();
+
+    renderApp();
+});
+
+document.getElementById("productCategoryFilter").addEventListener("change", function(event) {
     event.preventDefault();
 
     renderApp();
