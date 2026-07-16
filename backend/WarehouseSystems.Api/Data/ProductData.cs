@@ -1,0 +1,13 @@
+using WarehouseSystems.Api.Models;
+
+namespace WarehouseSystems.Api.Data;
+
+public static class ProductData
+{
+    public static readonly Product[] Products =
+    [
+        new Product("GL-01-SM", "Safety Gloves", "PPE", "A1-F", 13, 7),
+        new Product("GL-01-LG", "Safety Gloves", "PPE", "A2-A", 0, 11),
+        new Product("JMP-03-MD", "Hi-Vis Jumper", "Hi-Vis", "D5-C", 1, 1)
+    ];
+}
