@@ -1,3 +1,5 @@
+using WarehouseSystems.Api.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
@@ -14,12 +16,3 @@ app.MapGet("/api/products", () => products);
 app.MapGet("/", () => "Warehouse Systems API");
 
 app.Run();
-
-record Product(
-    string Sku,
-    string ProductName,
-    string Category,
-    string Location,
-    int Stock,
-    int ReorderLevel
-);
