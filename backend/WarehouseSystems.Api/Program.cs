@@ -22,6 +22,8 @@ app.MapGet("/api/customers/{customerId}", (int customerId) =>
     return customer is not null ? Results.Ok(customer) : Results.NotFound();
 });
 
+app.MapGet("/api/orders", () => OrderData.Orders);
+
 app.MapGet("/", () => "Warehouse Systems API");
 
 app.Run();
