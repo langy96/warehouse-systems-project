@@ -24,6 +24,13 @@ app.MapGet("/api/customers/{customerId}", (int customerId) =>
 
 app.MapGet("/api/orders", () => OrderData.Orders);
 
+app.MapGet("/api/orders/{orderNumber}", (int orderNumber) =>
+{
+    var order = OrderData.Orders.FirstOrDefault(order => order.OrderNumber == orderNumber);
+
+    return order is not null ? Results.Ok(order) : Results.NotFound();
+});
+
 app.MapGet("/", () => "Warehouse Systems API");
 
 app.Run();
