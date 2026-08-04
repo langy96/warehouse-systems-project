@@ -15,6 +15,13 @@ app.MapGet("/api/products/{sku}", (string sku) =>
 
 app.MapGet("/api/customers", () => CustomerData.Customers);
 
+app.MapGet("/api/customers/{customerId}", (int customerId) =>
+{
+    var customer = CustomerData.Customers.FirstOrDefault(customer => customer.CustomerId == customerId);
+
+    return customer is not null ? Results.Ok(customer) : Results.NotFound();
+});
+
 app.MapGet("/", () => "Warehouse Systems API");
 
 app.Run();
