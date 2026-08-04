@@ -13,6 +13,8 @@ app.MapGet("/api/products/{sku}", (string sku) =>
     return product is not null ? Results.Ok(product) : Results.NotFound();
 });
 
+app.MapGet("/api/customers", () => CustomerData.Customers);
+
 app.MapGet("/", () => "Warehouse Systems API");
 
 app.Run();
