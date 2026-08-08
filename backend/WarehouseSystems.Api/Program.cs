@@ -4,7 +4,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
-app.MapGet("/api/products", () => ProductData.Products);
+var connectionString = builder.Configuration.GetConnectionString("WarehouseDatabase");
+var productRepository = new ProductRepository(connectionString!);
+
+app.MapGet("/api/products", () => productRepository.GetAllProducts());
 
 app.MapGet("/api/products/{sku}", (string sku) =>
 {
