@@ -41,4 +41,34 @@ public class ProductRepository
 
         return products;
     }
+
+    public Product? GetProductBySku(string sku)
+    {
+        using var connection = new SqlConnection(_connectionString);
+
+        connection.Open();
+
+        using var command = new SqlCommand(
+            "SELECT Sku, ProductName, Category, LocationCode, Stock, ReorderLevel FROM Products WHERE Sku = @sku",
+            connection
+        );
+
+        command.Parameters.AddWithValue("@sku", sku);
+
+        using var reader = command.ExecuteReader();
+
+        if (!reader.Read())
+        {
+            return null;
+        }
+
+        return new Product(
+            reader.GetString(0),
+            reader.GetString(1),
+            reader.GetString(2),
+            reader.GetString(3),
+            reader.GetInt32(4),
+            reader.GetInt32(5)
+        );
+    }
 }

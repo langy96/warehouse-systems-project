@@ -11,7 +11,7 @@ app.MapGet("/api/products", () => productRepository.GetAllProducts());
 
 app.MapGet("/api/products/{sku}", (string sku) =>
 {
-    var product = ProductData.Products.FirstOrDefault(product => product.Sku == sku);
+    var product = productRepository.GetProductBySku(sku);
 
     return product is not null ? Results.Ok(product) : Results.NotFound();
 });
